@@ -31,7 +31,7 @@ app.use('/api/payment', paymentRoutes);
 const sendAlertEmail = require('./utils/mailer');
 
 const cron = require('node-cron');
-const checkWeatherAlerts = require('./utils/alertChecker');
+const checkWeatherAlerts = require('./utils/alertchecker');
 
 // Runs every day at 7:00 AM server time
 cron.schedule('0 7 * * *', () => {
