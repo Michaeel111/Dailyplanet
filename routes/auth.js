@@ -82,7 +82,7 @@ router.post('/forgot-password', async (req, res) => {
       { expiresIn: '15m' }
     );
 
-    const resetLink = `http://localhost:5000/reset-password.html?token=${resetToken}`;
+    const resetLink = `dailyplanet-production.up.railway.app/reset-password.html?token=${resetToken}`;
 
     await transporter.sendMail({
       from: `"Daily Planet Weather" <${process.env.EMAIL_USER}>`,
