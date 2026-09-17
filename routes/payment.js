@@ -13,7 +13,7 @@ router.post('/initialize', requireAuth, async (req, res) => {
       {
         email: req.user.email,
         amount: 500000, // amount in kobo — this is ₦5,000
-        callback_url: 'http://localhost:5000/premium-success.html'
+        callback_url: 'https://dailyplanet-production.up.railway.app/premium-success.html'
       },
       {
         headers: {
