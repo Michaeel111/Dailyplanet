@@ -6,7 +6,7 @@ async function sendAlertEmail(to, city, condition, description) {
   await resend.emails.send({
     from: 'Daily Planet <onboarding@resend.dev>',
     to,
-    subject: ⚠️ Weather Alert: ${condition} in ${city},
+    subject: `⚠️ Weather Alert: ${condition} in ${city},
     html: 
       <h2>Weather Alert for ${city}</h2>
       <p>${description}</p>
