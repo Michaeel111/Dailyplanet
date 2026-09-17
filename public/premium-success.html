@@ -11,34 +11,43 @@
   </div>
 
  <script>
-    const params = new URLSearchParams(window.location.search);
-    const reference = params.get('reference');
-    const statusMsg = document.getElementById('statusMsg');
+  const params = new URLSearchParams(window.location.search);
+  const reference = params.get('reference');
+  const statusMsg = document.getElementById('statusMsg');
 
-    async function verify() {
-      if (!reference) {
-        statusMsg.textContent = 'No payment reference found.';
-        return;
-      }
-
-      try {
-        const response = await fetch(/api/payment/verify/${reference}, {
-          headers: { 'Authorization': Bearer ${localStorage.getItem('token')} }
-        });
-        const result = await response.json();
-
-        if (result.success) {
-          statusMsg.textContent = 'Payment successful! Redirecting...';
-          setTimeout(() => { window.location.href = '/'; }, 2000);
-        } else {
-          statusMsg.textContent = 'Payment could not be verified.';
-        }
-      } catch (err) {
-        statusMsg.textContent = 'Something went wrong verifying payment.';
-      }
+  async function verify() {
+    if (!reference) {
+      statusMsg.textContent = 'No payment reference found.';
+      return;
     }
 
-    verify();
-  </script>
+    try {
+      const response = await fetch(`/api/payment/verify/${reference}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        statusMsg.textContent = 'Payment successful! Redirecting...';
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+      } else {
+        statusMsg.textContent =
+          result.message || 'Payment could not be verified.';
+      }
+    } catch (err) {
+      console.error(err);
+      statusMsg.textContent =
+        'Something went wrong verifying payment.';
+    }
+  }
+
+  verify();
+</script>
 </body>
 </html>
