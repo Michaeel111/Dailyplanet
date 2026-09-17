@@ -1,31 +1,37 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 30000
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendAlertEmail(to, city, condition, description) {
-  await transporter.sendMail({
-    from: `"Daily Planet Weather" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: 'Daily Planet <onboarding@resend.dev>',
     to,
-    subject: `⚠️ Weather Alert: ${condition} in ${city}`,
-    html: `
+    subject: ⚠️ Weather Alert: ${condition} in ${city},
+    html: 
       <h2>Weather Alert for ${city}</h2>
       <p>${description}</p>
       <p>Stay safe!</p>
       <p style="color:#888;font-size:12px;">— Daily Planet</p>
-    `
+    
   });
 }
 
-module.exports = sendAlertEmail;
-module.exports.transporter = transporter;
+async function sendResetEmail(to, resetLink) {
+  await resend.emails.send({
+    from: 'Daily Planet <onboarding@resend.dev>',
+    to,
+    subject: 'Reset your Daily Planet password',
+    html: 
+      <h2>Password Reset</h2>
+      <p>Click the link below to reset your Daily Planet password.</p>
+      <p>This link expires in 15 minutes.</p>
+      <a href="${resetLink}">${resetLink}</a>
+      <p>If you didn't request this, you can safely ignore this email.</p>
+    
+  });
+}
+
+module.exports = {
+  sendAlertEmail,
+  sendResetEmail
+};

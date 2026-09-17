@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
-const { transporter } = require('../utils/mailer');
+const { sendResetEmail } = require('../utils/mailer');
 
 const router = express.Router();
 
@@ -84,7 +84,8 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetLink = `dailyplanet-production.up.railway.app/reset-password.html?token=${resetToken}`;
 
-    await transporter.sendMail({
+    await sendResetEmail(email,resetLink);
+    ({
       from: `"Daily Planet Weather" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'Reset your Daily Planet password',
