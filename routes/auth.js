@@ -82,20 +82,9 @@ router.post('/forgot-password', async (req, res) => {
       { expiresIn: '15m' }
     );
 
-    const resetLink = `dailyplanet-production.up.railway.app/reset-password.html?token=${resetToken}`;
+    const resetLink = `https://dailyplanet-production.up.railway.app/reset-password.html?token=${resetToken}`;
 
     await sendResetEmail(email,resetLink);
-    ({
-      from: `"Daily Planet Weather" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: 'Reset your Daily Planet password',
-      html: `
-        <h2>Password Reset</h2>
-        <p>Click the link below to reset your password. This link expires in 15 minutes.</p>
-        <a href="${resetLink}">${resetLink}</a>
-        <p>If you didn't request this, you can safely ignore this email.</p>
-      `
-    });
 
     res.json({ message: 'If that email exists, a reset link has been sent.' });
   } catch (err) {
