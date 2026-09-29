@@ -82,7 +82,7 @@ router.post('/forgot-password', async (req, res) => {
       { expiresIn: '15m' }
     );
 
-    const resetLink = `https://dailyplanet-production.up.railway.app/reset-password.html?token=${resetToken}`;
+    const resetLink = `https://dailyplanet-v0-production.up.railway.app/reset-password.html?token=${resetToken}`;
 
     await sendResetEmail(email,resetLink);
 
