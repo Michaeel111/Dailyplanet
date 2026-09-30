@@ -23,7 +23,7 @@ router.post('/initialize', requireAuth, async (req, res) => {
       },
       {
         headers: {
-          Authorization: Bearer ${process.env.PAYSTACK_SECRET_KEY},
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
         },
       }
     );
@@ -41,10 +41,10 @@ router.get('/verify/:reference', async (req, res) => {
 
   try {
     const response = await axios.get(
-      https://api.paystack.co/transaction/verify/${reference},
+      `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: {
-          Authorization: Bearer ${process.env.PAYSTACK_SECRET_KEY},
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
         },
       }
     );
