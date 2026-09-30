@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/initialize', requireAuth, async (req, res) => {
   try {
     const response = await axios.post(
-      'http://api.paystack.co/transaction/initialize',
+      'https://api.paystack.co/transaction/initialize',
       {
         email: req.user.email,
         amount: 500000, // ₦5,000
