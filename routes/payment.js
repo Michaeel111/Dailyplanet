@@ -14,7 +14,7 @@ router.post('/initialize', requireAuth, async (req, res) => {
         email: req.user.email,
         amount: 500000, // ₦5,000
         callback_url:
-          'https://localhost:3000/premium-success',
+          'https://dailyplanet-v0-production.up.railway.app/premium-success',
 
         // Keep track of which Daily Planet user made this payment
         metadata: {
